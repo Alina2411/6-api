@@ -16,8 +16,8 @@ def get_numbers_comics():
     comics = 'https://xkcd.com/info.0.json'
     response = requests.get(comics)
     response.raise_for_status()
-    total_number_comic = response.json()['num']
-    return total_number_comic
+    comic_number_total = response.json()['num']
+    return comic_number_total
 
 
 def get_random_comics(all_number_comics):
@@ -37,9 +37,9 @@ def main():
     chat_id = os.environ['TG_CHAT_ID']
     try:
         bot = telegram.Bot(token=tg_token)
-        numbers_comics = get_numbers_comics()
-        img, comment = get_random_comics(numbers_comics)
-        download_images("comic.png", img)
+        comics_numbers = get_numbers_comics()
+        img_url, comment = get_random_comics(comics_numbers)
+        download_images("comic.png", img_url)
         with open("comic.png", 'rb') as f:
             bot.send_photo(chat_id=chat_id, photo=f, caption=comment)
     finally:
